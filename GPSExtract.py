@@ -3,7 +3,7 @@ from PIL.ExifTags import TAGS, GPSTAGS
 
 
 #Open the image
-img = Image.open("/home/stavros/Documents/vsCode/gpsTracker/test01.jpg")
+img = Image.open("/home/stavros/Documents/vsCode/gpsTracker/test01.JPG")
 
 # Get Exif Data
 exif_data = img.getexif()
@@ -12,6 +12,7 @@ for key in sorted(exif_data):
     print(str(key) + ": " + str(exif_data[key]))
 
 #define function to convert GPS coords to decimal degrees
+#(degrees, minutes, seconds) - Format for each Lat & Long
 def convert_to_degrees(value):
     degrees = value[0] + value[1]/60 + value[2]/3600
     return degrees 
