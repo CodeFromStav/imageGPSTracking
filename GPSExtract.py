@@ -2,7 +2,6 @@ from PIL import Image
 from PIL.ExifTags import TAGS, GPSTAGS
 
 
- 
 #Open the image
 img = Image.open("C:/Users/stavt/Documents/VSCode/GPSPoint/img.jpg")
 # Get Exif Data
