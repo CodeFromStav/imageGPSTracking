@@ -8,8 +8,12 @@ img = Image.open("/home/stavros/Documents/vsCode/gpsTracker/test01.JPG")
 # Get Exif Data
 exif_data = img.getexif()
 
+#Prints EXIF DATA for viewing
+print("EXIF DATA PRINT START\n")
 for key in sorted(exif_data):
     print(str(key) + ": " + str(exif_data[key]))
+print("EXIF DATA PRINT END\n")
+
 
 #define function to convert GPS coords to decimal degrees
 #(degrees, minutes, seconds) - Format for each Lat & Long
