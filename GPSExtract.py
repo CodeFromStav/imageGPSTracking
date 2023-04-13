@@ -3,7 +3,8 @@ from PIL.ExifTags import TAGS, GPSTAGS
 
 
 #Open the image
-img = Image.open("C:/Users/stavt/Documents/VSCode/GPSPoint/img.jpg")
+img = Image.open("/home/stavros/Documents/vsCode/gpsTracker/test01.jpg")
+
 # Get Exif Data
 exif_data = img.getexif()
 
@@ -22,10 +23,12 @@ def adjust_coordinates(coord, ref):
         decimal = -decimal
     return decimal
     
-#
+#main function
 def extract_gps_data(exif_data):
+
     gps_data = exif_data.get('GPSInfo', None)
-    # print(gps_data)
+    print(gps_data)
+
     if not gps_data:
         print("No gps_data")
         return None
@@ -33,6 +36,7 @@ def extract_gps_data(exif_data):
     #Converts integercodes to human readable tag names.
     gps_info = {GPSTAGS.get(tag, tag): value for tag, value in gps_data.items()}
     
+    #convers lat and long to degrees format
     lat = convert_to_degrees(gps_info['GPSLatitude'])
     lon = convert_to_degrees(gps_info['GPSLongitude'])
     lat_ref = gps_info['GPSLatitudeRef']
@@ -42,6 +46,7 @@ def extract_gps_data(exif_data):
     
     return adjust_coordinates(lat,lat_ref), adjust_coordinates(lon,lon_ref)
 
+#calling main function to execute
 gps_data = extract_gps_data(exif_data)
 if gps_data:
     lat,lon = gps_data
