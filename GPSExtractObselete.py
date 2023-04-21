@@ -4,19 +4,24 @@ from PIL.ExifTags import TAGS, GPSTAGS
 # GPS Latitude: 33 deg 9' 43.11" N
 # GPS Longitude: 117 deg 21' 3.37" W
 
+GPSINFO_TAG = next( tag for tag, name in TAGS.items() if name == "GPSInfo")
+
 img_path = "/home/stavros/Documents/vsCode/gpsTracker/test02.JPG"
 with open(img_path, "rb") as f:
     img = Image.open(f)
     img_exif_data = img.getexif()
+    # print(img_exif_data)
+
+gps_info = img_exif_data.get_ifd(GPSINFO_TAG)
+
+# print(gps_info)
 
 #Prints EXIF DATA for viewing
-print("EXIF DATA PRINT START\n")
-for key in sorted(img_exif_data):
-    print(str(key) + ": " + str(img_exif_data[key]))
-    # print(img_exif_data[key])
-print("EXIF DATA PRINT END\n")
-
-
+# print("EXIF DATA PRINT START\n")
+# for key in sorted(img_exif_data):
+#     print(str(key) + ": " + str(img_exif_data[key]))
+#     # print(img_exif_data[key])
+# print("EXIF DATA PRINT END\n")
 
 
 #define function to convert GPS coords to decimal degrees
@@ -35,12 +40,10 @@ def adjust_coordinates(coord, ref):
 #main function
 def extract_gps_data(exif_data):
 
-    test_data = exif_data.get('GPS Latitude')
-    print("test_data:", test_data)
-
     # gps_data = exif_data.get('GPSInfo', None)
-    gps_data = exif_data.get('GPSInfo', None)
-    print("gps_data: ", gps_data)
+    # gps_data = exif_data.get('GPSInfo', None)
+    # print("gps_data: ", gps_data)
+    print(exif_data)
 
     if not gps_data:
         print("No gps_data")
@@ -61,7 +64,7 @@ def extract_gps_data(exif_data):
     return adjust_coordinates(lat,lat_ref), adjust_coordinates(lon,lon_ref)
 
 #calling main function to execute
-gps_data = extract_gps_data(img_exif_data)
+gps_data = extract_gps_data(gps_info)
 if gps_data:
     lat,lon = gps_data
     print("Latitude: ", lat)
